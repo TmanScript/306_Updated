@@ -24,24 +24,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # If your project needs Node.js (for build tools like Vite or React)
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 🧩 Install dependencies and build the project
+      # use npm install instead of npm ci
       - name: Install and Build
         run: |
-          npm ci
+          npm install
           npm run build
 
+      # Configure GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Upload the built site to GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'   # 👈 the folder with your index.html after build
+          # 👇 This folder should contain your index.html after building
+          path: ./dist
 
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
